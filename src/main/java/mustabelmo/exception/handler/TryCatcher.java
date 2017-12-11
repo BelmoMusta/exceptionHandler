@@ -17,13 +17,16 @@ public class TryCatcher {
     public TryCatcher(TryBlock tryBlock, CatchBlock catchBlock) {
         try {
             tryBlock.perform();
+
         } catch (Throwable throwable) {
+            if(throwable!=null)
             catchBlock.handle(throwable);
         }
     }
 
     private void catchBlock(Throwable throwable, CatchBlock catchBlock) {
-        catchBlock.handle(throwable);
+        if (throwable != null)
+            catchBlock.handle(throwable);
     }
 
     public void multipleCatchBlocks(List<Pair> handlers) {

@@ -14,16 +14,16 @@ public class TryCatchTest extends TestCase {
 
     @Test
     public void testUniqueTryCatchBlock() {
-        final boolean[] y = {false};
+        final boolean[] check = {false};
         TryCatcher tryCatcher = new TryCatcher();
         tryCatcher.tryBlock(() -> {
             throw new Exception(MESSAGE);
         },
             throwable -> {
             throwable.printStackTrace();
-            y[0] = throwable.getMessage().equals(MESSAGE) ;
+            check[0] = throwable.getMessage().equals(MESSAGE) ;
         });
-        assertEquals(y[0], true);
+        assertEquals(check[0], true);
     }
 
 
@@ -35,7 +35,7 @@ public class TryCatchTest extends TestCase {
         };
         CatchBlock catchBlockBlock =  throwable -> {
             throwable.printStackTrace();
-            check[0] = throwable.getMessage().equals(MESSAGE) ;
+            check[0] = true;
         };
 
         TryCatcher tryCatcher = new TryCatcher(tryBlock,catchBlockBlock);
