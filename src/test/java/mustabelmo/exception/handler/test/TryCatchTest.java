@@ -17,12 +17,12 @@ public class TryCatchTest extends TestCase {
         final boolean[] check = {false};
         TryCatcher tryCatcher = new TryCatcher();
         tryCatcher.tryBlock(() -> {
-            throw new Exception(MESSAGE);
-        },
-            throwable -> {
-            throwable.printStackTrace();
-            check[0] = throwable.getMessage().equals(MESSAGE) ;
-        });
+                    throw new Exception(MESSAGE);
+                },
+                throwable -> {
+                    throwable.printStackTrace();
+                    check[0] = throwable.getMessage().equals(MESSAGE);
+                });
         assertEquals(check[0], true);
     }
 
@@ -33,12 +33,28 @@ public class TryCatchTest extends TestCase {
         TryBlock tryBlock = () -> {
             throw new Exception(MESSAGE);
         };
-        CatchBlock catchBlockBlock =  throwable -> {
+        CatchBlock catchBlockBlock = throwable -> {
             throwable.printStackTrace();
             check[0] = true;
         };
 
-        TryCatcher tryCatcher = new TryCatcher(tryBlock,catchBlockBlock);
+        TryCatcher tryCatcher = new TryCatcher(tryBlock, catchBlockBlock);
+        assertEquals(check[0], true);
+    }
+
+    @Test
+    public void testWithoutCatchBlock() {
+        final boolean[] check = {true};
+
+        TryBlock tryBlock = () -> {
+            //  don't throw any exception from here
+
+        };
+        CatchBlock catchBlockBlock = throwable -> {
+            check[0] = false;
+            throwable.printStackTrace();
+        };
+        TryCatcher tryCatcher = new TryCatcher(tryBlock, catchBlockBlock);
         assertEquals(check[0], true);
     }
 }

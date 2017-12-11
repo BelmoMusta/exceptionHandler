@@ -19,14 +19,12 @@ public class TryCatcher {
             tryBlock.perform();
 
         } catch (Throwable throwable) {
-            if(throwable!=null)
             catchBlock.handle(throwable);
         }
     }
 
     private void catchBlock(Throwable throwable, CatchBlock catchBlock) {
-        if (throwable != null)
-            catchBlock.handle(throwable);
+        catchBlock.handle(throwable);
     }
 
     public void multipleCatchBlocks(List<Pair> handlers) {
