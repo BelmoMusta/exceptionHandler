@@ -26,11 +26,10 @@ public class TryCatcher {
         catchBlock.handle(throwable);
     }
 
-    public void multipleCatchBlocks(List<Pair<Throwable, CatchBlock>> handlers) {
-        for (Pair<Throwable, CatchBlock> handler : handlers) {
-            handler.handler.handle(handler.throwable);
+    public void multipleCatchBlocks(List<Pair> handlers) {
+        for (Pair pair : handlers) {
+            pair.getHandler().handle(pair.getThrowable());
         }
-
     }
 
     public void tryBlock(TryBlock tryBlock, CatchBlock catchBlock) {
@@ -41,7 +40,7 @@ public class TryCatcher {
         }
     }
 
-    public void tryBlockWithMultiCatches(TryBlock tryBlock, List<Pair<Throwable, CatchBlock>> handlers) {
+    public void tryBlockWithMultiCatches(TryBlock tryBlock, List<Pair> handlers) {
         try {
             tryBlock.perform();
         } catch (Throwable throwable) {

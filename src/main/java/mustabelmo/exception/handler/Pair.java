@@ -1,12 +1,22 @@
 package mustabelmo.exception.handler;
 
-public class Pair<T, H> {
+import mustabelmo.exception.handler.functional.CatchBlock;
 
-    T throwable;
-    H handler;
+public class Pair {
 
-    public Pair(T throwable, H handler) {
+    Throwable throwable;
+    CatchBlock handler;
+
+    public Pair(Throwable throwable, CatchBlock handler) {
         this.throwable = throwable;
         this.handler = handler;
+    }
+
+    public CatchBlock getHandler() {
+        return handler;
+    }
+
+    public Throwable getThrowable() {
+        return throwable;
     }
 }
