@@ -17,10 +17,10 @@ by making use of the advantages provided by the functoinal behaviour in java 8 a
   // your code goes here
             throw new Exception(MESSAGE);
         };
-        CatchBlock catchBlockBlock =  throwable -> {
+        CatchBlock catchBlock =  throwable -> {
         // and handle the thrown exception here
             throwable.printStackTrace();
         };
 
-        TryCatcher tryCatcher = new TryCatcher(tryBlock,catchBlockBlock);
+        TryCatcher tryCatcher = new TryCatcher(tryBlock,catchBlock);
 ```
