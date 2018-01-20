@@ -61,7 +61,8 @@ public class TryCatchTest extends TestCase {
         };
         TryCatcher tryCatcher = new TryCatcher(tryBlock);
 
-        tryCatcher.when(NullPointerException.class, nullPointerBlock)
+        tryCatcher
+                .when(NullPointerException.class, nullPointerBlock)
                 .when(IllegalArgumentException.class, illegalArgBlock)
                 .execute();
 

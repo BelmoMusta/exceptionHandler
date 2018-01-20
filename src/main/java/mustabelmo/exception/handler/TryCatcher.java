@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 public class TryCatcher {
 
-    private static final Class<?> DEFAULT = Exception.class;
+    private static final Class<?> DEFAULT = Throwable.class;
 
     private TryBlock tryBlock;
     private CatchBlock catchBlock;
