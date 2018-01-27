@@ -3,50 +3,54 @@ package mustabelmo.exception.handler;
 import mustabelmo.exception.handler.functional.CatchBlock;
 import mustabelmo.exception.handler.functional.TryBlock;
 
-import java.util.List;
+import java.util.HashMap;
 
 public class TryCatcher {
 
+    private static final Class<?> DEFAULT = Throwable.class;
+
+    private TryBlock tryBlock;
+    private CatchBlock catchBlock;
+    private HashMap<Class<?>, CatchBlock> map;
+
     public TryCatcher() {
+        map = new HashMap<>();
+        map.put(DEFAULT, throwable -> {
+
+        });
     }
 
-    public void throwIfnoHandler(Throwable throwable) throws Throwable {
-        throw throwable;
+    public TryCatcher(TryBlock tryBlock) {
+        this();
+        this.tryBlock = tryBlock;
     }
 
     public TryCatcher(TryBlock tryBlock, CatchBlock catchBlock) {
-        try {
-            tryBlock.perform();
-
-        } catch (Throwable throwable) {
-            catchBlock.handle(throwable);
-        }
+        this(tryBlock);
+        this.catchBlock = catchBlock;
     }
 
-    private void catchBlock(Throwable throwable, CatchBlock catchBlock) {
-        catchBlock.handle(throwable);
-    }
 
-    public void multipleCatchBlocks(List<Pair> handlers) {
-        for (Pair pair : handlers) {
-            pair.getHandler().handle(pair.getThrowable());
-        }
-    }
-
-    public void tryBlock(TryBlock tryBlock, CatchBlock catchBlock) {
+    public void execute() {
         try {
             tryBlock.perform();
         } catch (Throwable throwable) {
-            catchBlock(throwable, catchBlock);
+
+            if (catchBlock != null) {
+                this.catchBlock.handle(throwable);
+            } else {
+                CatchBlock currentCatchBlock = map.get(throwable.getClass());
+                if (currentCatchBlock == null) {
+                    currentCatchBlock = map.get(DEFAULT);
+                }
+                currentCatchBlock.handle(throwable);
+            }
         }
     }
 
-    public void tryBlockWithMultiCatches(TryBlock tryBlock, List<Pair> handlers) {
-        try {
-            tryBlock.perform();
-        } catch (Throwable throwable) {
-            multipleCatchBlocks(handlers);
-        }
+    public <T> TryCatcher when(Class<T> tClass, CatchBlock catchBlockBlock) {
+        map.put(tClass, catchBlockBlock);
+        return this;
     }
 }
 
