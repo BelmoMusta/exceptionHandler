@@ -21,7 +21,7 @@ public class TryCatchTest extends TestCase {
                 },
                 throwable -> {
                     throwable.printStackTrace();
-                    check[0] = throwable.getMessage().equals(MESSAGE);
+                    check[0] = MESSAGE.equals(throwable.getMessage());
                 });
         assertEquals(check[0], true);
     }
@@ -48,7 +48,6 @@ public class TryCatchTest extends TestCase {
 
         TryBlock tryBlock = () -> {
             //  don't throw any exception from here
-
         };
         CatchBlock catchBlockBlock = throwable -> {
             check[0] = false;
