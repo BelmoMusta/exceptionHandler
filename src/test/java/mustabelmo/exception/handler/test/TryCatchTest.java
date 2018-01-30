@@ -81,17 +81,46 @@ public class TryCatchTest extends TestCase {
         };
 
         TryCatcher tryCatcher = new TryCatcher(tryBlock);
-
         tryCatcher.defaultCatch(defaultCatch)
                 .execute();
         assertFalse(check[0]);
     }
 
-    public void testfinallyBlock() {
+    public void testFinallyBlock() {
         final int[] blocksCount = {0};
 
         TryBlock tryBlock = () -> {
             throw new IllegalArgumentException("ILLEGAL ARGUMENT");
+        };
+
+        CatchBlock defaultCatch = throwable -> blocksCount[0]++;
+        FinallyBlock finallyBlock = () -> {
+            System.out.println("finally block reached");
+            blocksCount[0]++;
+        };
+
+        TryCatcher tryCatcher = new TryCatcher(tryBlock);
+        tryCatcher.defaultCatch(defaultCatch)
+                .finallyBlock(finallyBlock)
+                .execute();
+        assertEquals(blocksCount[0], 2);
+    }
+
+    public void testThen() {
+        final int[] blocksCount = {0};
+
+        TryBlock tryBlock = () -> {
+            throw new IllegalArgumentException("ILLEGAL ARGUMENT");
+        };
+
+        TryBlock thenBlock = () -> {
+            blocksCount[0]++;
+            throw new NullPointerException("NullPointerException ");
+        };
+
+        TryBlock anotherThenBlock = () -> {
+            blocksCount[0]++;
+            throw new RuntimeException("runtimeException ");
         };
 
         CatchBlock defaultCatch = throwable -> blocksCount[0]++;
@@ -103,9 +132,16 @@ public class TryCatchTest extends TestCase {
 
         TryCatcher tryCatcher = new TryCatcher(tryBlock);
 
+        TryCatcher thenTry = new TryCatcher(thenBlock);
+        TryCatcher anotherThenTry = new TryCatcher(anotherThenBlock);
+        thenTry.defaultCatch(System.out::println);
+        anotherThenTry.defaultCatch(System.out::println);
         tryCatcher.defaultCatch(defaultCatch)
                 .finallyBlock(finallyBlock)
-                .execute();
-        assertEquals(blocksCount[0], 2);
+                .execute()
+                .then(thenTry)
+                .then(anotherThenTry);
+
+        assertEquals(blocksCount[0], 4);
     }
 }

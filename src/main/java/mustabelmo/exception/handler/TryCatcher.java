@@ -8,6 +8,10 @@ import java.util.HashMap;
 
 public class TryCatcher {
     /**
+     * specifies if the try catch block is already executed or not
+     */
+    private boolean executed;
+    /**
      * the default exception
      */
     private static final Class<?> DEFAULT = Throwable.class;
@@ -60,21 +64,25 @@ public class TryCatcher {
     /**
      * Execute the try block and the associated catch blocks, and also the finally block
      */
-    public void execute() {
-        try {
-            tryBlock.perform();
+    public TryCatcher execute() {
+        if (!executed) {
+            try {
+                tryBlock.perform();
 
-        } catch (Throwable throwable) {
-            CatchBlock currentCatchBlock = catchBlockMap.get(throwable.getClass());
-            if (currentCatchBlock == null) {
-                currentCatchBlock = catchBlockMap.get(DEFAULT);
+            } catch (Throwable throwable) {
+                CatchBlock currentCatchBlock = catchBlockMap.get(throwable.getClass());
+                if (currentCatchBlock == null) {
+                    currentCatchBlock = catchBlockMap.get(DEFAULT);
+                }
+                currentCatchBlock.handle(throwable);
+            } finally {
+                if (finallyBlock != null) {
+                    finallyBlock.onFinalize();
+                }
             }
-            currentCatchBlock.handle(throwable);
-        } finally {
-            if (finallyBlock != null) {
-                finallyBlock.onFinalize();
-            }
+            executed = true;
         }
+        return this;
     }
 
     /**
@@ -110,5 +118,15 @@ public class TryCatcher {
     public TryCatcher finallyBlock(FinallyBlock finallyBlock) {
         this.finallyBlock = finallyBlock;
         return this;
+    }
+
+    /**
+     * Execute another try catch block
+     *
+     * @param tryCatcher another try catch block to execute.
+     */
+    public TryCatcher then(TryCatcher tryCatcher) {
+        tryCatcher.execute();
+        return tryCatcher;
     }
 }
