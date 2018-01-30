@@ -10,6 +10,7 @@ public class TryCatchTest extends TestCase {
 
      private static final String MESSAGE = "here is your exception";
 
+
     public void testUniqueTryCatchBlockWithConstructor() {
         final boolean[] check = {false};
         TryBlock tryBlock = () -> {
