@@ -1,6 +1,7 @@
 package mustabelmo.exception.handler;
 
 import mustabelmo.exception.handler.functional.CatchBlock;
+import mustabelmo.exception.handler.functional.FinallyBlock;
 import mustabelmo.exception.handler.functional.TryBlock;
 
 import java.util.HashMap;
@@ -14,6 +15,11 @@ public class TryCatcher {
      * the try block
      */
     private TryBlock tryBlock;
+
+    /**
+     * the finally block
+     */
+    private FinallyBlock finallyBlock;
 
     /**
      * the catchBlockMap of the exceptions and their correspondent catch blocks
@@ -52,7 +58,7 @@ public class TryCatcher {
     }
 
     /**
-     * Execute the try block and the associated catch blocks
+     * Execute the try block and the associated catch blocks, and also the finally block
      */
     public void execute() {
         try {
@@ -64,6 +70,10 @@ public class TryCatcher {
                 currentCatchBlock = catchBlockMap.get(DEFAULT);
             }
             currentCatchBlock.handle(throwable);
+        } finally {
+            if (finallyBlock != null) {
+                finallyBlock.onFinalize();
+            }
         }
     }
 
@@ -90,6 +100,15 @@ public class TryCatcher {
         catchBlockMap.put(DEFAULT, catchBlockBlock);
         return this;
     }
+
+    /**
+     * assign the finally block to the try catch process
+     *
+     * @param finallyBlock the finalize the try catch block
+     * @return the current instance of TryCatcher
+     */
+    public TryCatcher finallyBlock(FinallyBlock finallyBlock) {
+        this.finallyBlock = finallyBlock;
+        return this;
+    }
 }
-
-

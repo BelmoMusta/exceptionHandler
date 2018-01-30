@@ -3,6 +3,7 @@ package mustabelmo.exception.handler.test;
 import junit.framework.TestCase;
 import mustabelmo.exception.handler.TryCatcher;
 import mustabelmo.exception.handler.functional.CatchBlock;
+import mustabelmo.exception.handler.functional.FinallyBlock;
 import mustabelmo.exception.handler.functional.TryBlock;
 
 public class TryCatchTest extends TestCase {
@@ -84,5 +85,27 @@ public class TryCatchTest extends TestCase {
         tryCatcher.defaultCatch(defaultCatch)
                 .execute();
         assertFalse(check[0]);
+    }
+
+    public void testfinallyBlock() {
+        final int[] blocksCount = {0};
+
+        TryBlock tryBlock = () -> {
+            throw new IllegalArgumentException("ILLEGAL ARGUMENT");
+        };
+
+        CatchBlock defaultCatch = throwable -> blocksCount[0]++;
+
+        FinallyBlock finallyBlock = () -> {
+            System.out.println("finally block reached");
+            blocksCount[0]++;
+        };
+
+        TryCatcher tryCatcher = new TryCatcher(tryBlock);
+
+        tryCatcher.defaultCatch(defaultCatch)
+                .finallyBlock(finallyBlock)
+                .execute();
+        assertEquals(blocksCount[0], 2);
     }
 }
