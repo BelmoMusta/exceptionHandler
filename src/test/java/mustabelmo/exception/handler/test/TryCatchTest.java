@@ -141,7 +141,9 @@ public class TryCatchTest extends TestCase {
                 .execute()
                 .then(thenTry)
                 .then(anotherThenTry);
-
+            /*
+             * assert the fact the execution has incremented the blocks count up to 4
+             */
         assertEquals(blocksCount[0], 4);
     }
 }
