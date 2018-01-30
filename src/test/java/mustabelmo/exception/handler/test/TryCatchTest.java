@@ -6,6 +6,8 @@ import mustabelmo.exception.handler.functional.CatchBlock;
 import mustabelmo.exception.handler.functional.FinallyBlock;
 import mustabelmo.exception.handler.functional.TryBlock;
 
+import java.util.Arrays;
+
 public class TryCatchTest extends TestCase {
 
 
@@ -145,5 +147,26 @@ public class TryCatchTest extends TestCase {
              * assert the fact the execution has incremented the blocks count up to 4
              */
         assertEquals(blocksCount[0], 4);
+    }
+
+    public void testMultipleExceptionsToOneCatch() {
+        final boolean[] check = {true};
+
+        TryBlock tryBlock = () -> {
+            if (!check[0]) throw new IllegalArgumentException("ILLEGAL ARGUMENT");
+            else throw new RuntimeException("A DUMMY NULL POINTER EXCEPTION ");
+        };
+
+        CatchBlock commonCatchBlock = throwable -> {
+            System.out.println("THE COMMON CATCH BLOCK");
+            check[0] = false;
+            throwable.printStackTrace();
+        };
+
+        TryCatcher tryCatcher = new TryCatcher(tryBlock);
+        tryCatcher.catchWhen(commonCatchBlock, Arrays.asList(RuntimeException.class,NumberFormatException.class));
+
+        tryCatcher.execute();
+        assertFalse(check[0]);
     }
 }

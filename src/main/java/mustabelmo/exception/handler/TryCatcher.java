@@ -4,7 +4,6 @@ import mustabelmo.exception.handler.functional.CatchBlock;
 import mustabelmo.exception.handler.functional.FinallyBlock;
 import mustabelmo.exception.handler.functional.TryBlock;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -101,29 +100,16 @@ public class TryCatcher {
         return catchWhen(catchBlockBlock, Collections.singletonList(exceptionClass));
     }
 
-    /**
-     * Assign the specific catch block whenever one of kind of exception is caught
-     *
-     * @param exceptionClasses the exception classes
-     * @param catchBlockBlock  the correspondent catch block
-     * @param <T>              the type of the exception
-     * @return the current instance
-     */
-    public <T> TryCatcher catchWhen(CatchBlock catchBlockBlock, Class<T>... exceptionClasses) {
-        return catchWhen(catchBlockBlock, Arrays.asList(exceptionClasses));
-    }
-
 
     /**
      * Assign the specific catch block whenever one of these exceptions is caught
      *
      * @param exceptionClasses the exception classes
      * @param catchBlockBlock  the correspondent catch block
-     * @param <T>              the type of the exception
      * @return the current instance
      */
-    public <T> TryCatcher catchWhen(CatchBlock catchBlockBlock, List<Class<T>> exceptionClasses) {
-        for (Class<T> exceptionClass : exceptionClasses) {
+    public   TryCatcher catchWhen(CatchBlock catchBlockBlock, List<Class<?>> exceptionClasses) {
+        for (Class<?> exceptionClass : exceptionClasses) {
             catchBlockMap.put(exceptionClass, catchBlockBlock);
         }
         return this;
