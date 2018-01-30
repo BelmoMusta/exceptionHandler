@@ -52,6 +52,16 @@ public class TryCatcher {
         map.put(tClass, catchBlockBlock);
         return this;
     }
+
+    /**
+     * in order to override the default catch block for the default exception
+     * @param catchBlockBlock the catch block
+     * @return the current instance of TryCatcher
+     */
+    public TryCatcher defaultCatch(CatchBlock catchBlockBlock) {
+        map.put(DEFAULT, catchBlockBlock);
+        return this;
+    }
 }
 
 
