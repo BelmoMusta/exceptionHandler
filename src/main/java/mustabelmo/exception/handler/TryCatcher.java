@@ -62,7 +62,8 @@ public class TryCatcher {
     }
 
     /**
-     * Execute the try block and the associated catch blocks, and also the finally block
+     * Execute the try block and the associated catch blocks,
+     * and also the finally block
      */
     public TryCatcher execute() {
         if (!executed) {
@@ -89,8 +90,8 @@ public class TryCatcher {
      * Assign the specific catch block whenever this kind of exception is caught
      *
      * @param exceptionClass  the exception class
-     * @param catchBlockBlock the correspondant catch block
-     * @param <T>             type of the exception
+     * @param catchBlockBlock the correspondent catch block
+     * @param <T>             the type of the exception
      * @return the current instance
      */
     public <T> TryCatcher when(Class<T> exceptionClass, CatchBlock catchBlockBlock) {
@@ -99,7 +100,7 @@ public class TryCatcher {
     }
 
     /**
-     * in order to override the default catch block for the default exception
+     * In order to override the default catch block for the default exception
      *
      * @param catchBlockBlock the catch block
      * @return the current instance of TryCatcher
@@ -110,9 +111,9 @@ public class TryCatcher {
     }
 
     /**
-     * assign the finally block to the try catch process
+     * Assign the finally block to the try catch process
      *
-     * @param finallyBlock the finalize the try catch block
+     * @param finallyBlock finally block
      * @return the current instance of TryCatcher
      */
     public TryCatcher finallyBlock(FinallyBlock finallyBlock) {
