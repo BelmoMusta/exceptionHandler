@@ -8,7 +8,7 @@ import mustabelmo.exception.handler.functional.TryBlock;
 public class TryCatchTest extends TestCase {
 
 
-     private static final String MESSAGE = "here is your exception";
+    private static final String MESSAGE = "here is your exception";
 
     public void testUniqueTryCatchBlockWithConstructor() {
         final boolean[] check = {false};
@@ -63,6 +63,25 @@ public class TryCatchTest extends TestCase {
         tryCatcher
                 .when(NullPointerException.class, nullPointerBlock)
                 .when(IllegalArgumentException.class, illegalArgBlock)
+                .execute();
+        assertFalse(check[0]);
+    }
+
+    public void testOverrideDefaultCatch() {
+        final boolean[] check = {true};
+
+        TryBlock tryBlock = () -> {
+            throw new IllegalArgumentException("ILLEGAL ARGUMENT");
+        };
+
+        CatchBlock defaultCatch = throwable -> {
+            check[0] = false;
+            System.out.println("this is the default catch when there is no catch block assigned for the caught exception");
+        };
+
+        TryCatcher tryCatcher = new TryCatcher(tryBlock);
+
+        tryCatcher.defaultCatch(defaultCatch)
                 .execute();
         assertFalse(check[0]);
     }
