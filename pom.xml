@@ -4,9 +4,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>mustabelmo</groupId>
-    <artifactId>mustabelmo.exception.handler</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <groupId>mustabelmo.exception.handler</groupId>
+    <artifactId>exceptionHandler</artifactId>
+
+    <version>1.0</version>
     <build>
         <plugins>
             <plugin>
@@ -26,6 +27,4 @@
             <version>RELEASE</version>
         </dependency>
     </dependencies>
-
-
 </project>
