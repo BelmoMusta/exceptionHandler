@@ -31,7 +31,7 @@ by making use of the advantages provided by the functoinal behaviour in java 8 a
 ```java
     TryBlock tryBlock = () -> {
              /*
-             some statements or method invacation that my result
+             some statements or method invocations that may result
              null pointer or illegal argument exceptions
               */
          };
