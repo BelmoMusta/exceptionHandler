@@ -92,12 +92,12 @@ public class TryCatcher {
      * Assign the specific catch block whenever this kind of exception is caught
      *
      * @param exceptionClass  the exception class
-     * @param catchBlockBlock the correspondent catch block
+     * @param catchBlock the correspondent catch block
      * @param <T>             the type of the exception
      * @return the current instance
      */
-    public <T> TryCatcher when(Class<T> exceptionClass, CatchBlock catchBlockBlock) {
-        return catchWhen(catchBlockBlock, Collections.singletonList(exceptionClass));
+    public <T> TryCatcher when(Class<T> exceptionClass, CatchBlock catchBlock) {
+        return catchWhen(catchBlock, Collections.singletonList(exceptionClass));
     }
 
 
@@ -105,12 +105,12 @@ public class TryCatcher {
      * Assign the specific catch block whenever one of these exceptions is caught
      *
      * @param exceptionClasses the exception classes
-     * @param catchBlockBlock  the correspondent catch block
+     * @param catchBlock  the correspondent catch block
      * @return the current instance
      */
-    public   TryCatcher catchWhen(CatchBlock catchBlockBlock, List<Class<?>> exceptionClasses) {
+    public   TryCatcher catchWhen(CatchBlock catchBlock, List<Class<?>> exceptionClasses) {
         for (Class<?> exceptionClass : exceptionClasses) {
-            catchBlockMap.put(exceptionClass, catchBlockBlock);
+            catchBlockMap.put(exceptionClass, catchBlock);
         }
         return this;
     }
@@ -118,11 +118,11 @@ public class TryCatcher {
     /**
      * In order to override the default catch block for the default exception
      *
-     * @param catchBlockBlock the catch block
+     * @param catchBlock the catch block
      * @return the current instance of TryCatcher
      */
-    public TryCatcher defaultCatch(CatchBlock catchBlockBlock) {
-        catchBlockMap.put(DEFAULT, catchBlockBlock);
+    public TryCatcher defaultCatch(CatchBlock catchBlock) {
+        catchBlockMap.put(DEFAULT, catchBlock);
         return this;
     }
 
