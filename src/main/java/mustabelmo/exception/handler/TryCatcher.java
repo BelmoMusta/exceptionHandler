@@ -3,9 +3,9 @@ package mustabelmo.exception.handler;
 import mustabelmo.exception.handler.functional.CatchBlock;
 import mustabelmo.exception.handler.functional.FinallyBlock;
 import mustabelmo.exception.handler.functional.TryBlock;
+import mustabelmo.exception.handler.utils.ClassMap;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 public class TryCatcher {
@@ -30,14 +30,14 @@ public class TryCatcher {
     /**
      * the catchBlockMap of the exceptions and their correspondent catch blocks
      */
-    private HashMap<Class<?>, CatchBlock> catchBlockMap;
+    private ClassMap catchBlockMap;
 
     /**
      * Constructor of the TryCatcher class
      * init the catchBlockMap holding the exceptions types and their correspondent catch blocks
      */
     public TryCatcher() {
-        catchBlockMap = new HashMap<>();
+        catchBlockMap = new ClassMap();
         catchBlockMap.put(DEFAULT, throwable -> {
         });
     }

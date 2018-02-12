@@ -21,6 +21,7 @@ public class TryCatchTest extends TestCase {
         CatchBlock catchBlockBlock = throwable -> {
             throwable.printStackTrace();
             check[0] = true;
+
         };
 
         TryCatcher tryCatcher = new TryCatcher(tryBlock, catchBlockBlock);
@@ -154,7 +155,7 @@ public class TryCatchTest extends TestCase {
 
         TryBlock tryBlock = () -> {
             if (!check[0]) throw new IllegalArgumentException("ILLEGAL ARGUMENT");
-            else throw new RuntimeException("A DUMMY NULL POINTER EXCEPTION ");
+            else throw new IllegalArgumentException("A DUMMY NULL POINTER EXCEPTION ");
         };
 
         CatchBlock commonCatchBlock = throwable -> {
