@@ -10,9 +10,10 @@ by making use of the advantages provided by the functoinal behaviour in java 8 a
             i = Integer.parseInt(s); // exception here
             System.out.println(i);
         }, (throwable) -> throwable.printStackTrace());
+               tryCatcher.execute();
 ```
 ## Or
-``` java
+```java
   TryBlock tryBlock = () -> {
   // your code goes here
             throw new Exception(MESSAGE);
@@ -23,4 +24,33 @@ by making use of the advantages provided by the functoinal behaviour in java 8 a
         };
 
         TryCatcher tryCatcher = new TryCatcher(tryBlock,catchBlock);
+        tryCatcher.execute();
 ```
+
+## Specific handlers
+```java
+    TryBlock tryBlock = () -> {
+             /*
+             some statements or method invocations that may result
+             null pointer or illegal argument exceptions
+              */
+         };
+ 
+         CatchBlock illegalArgBlock = throwable -> {
+             /*
+             logic to perform when a null Pointer exception is caught
+             */
+         };
+ 
+         CatchBlock nullPointerBlock = throwable -> {
+            /*
+            logic to perform when a null Pointer exception is caught
+             */
+         };
+         TryCatcher tryCatcher = new TryCatcher(tryBlock);
+ 
+         tryCatcher
+                 .when(NullPointerException.class, nullPointerBlock)
+                 .when(IllegalArgumentException.class, illegalArgBlock)
+                 .execute();
+```                 
