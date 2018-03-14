@@ -91,9 +91,9 @@ public class TryCatcher {
     /**
      * Assign the specific catch block whenever this kind of exception is caught
      *
-     * @param exceptionClass  the exception class
-     * @param catchBlock the correspondent catch block
-     * @param <T>             the type of the exception
+     * @param exceptionClass the exception class
+     * @param catchBlock     the correspondent catch block
+     * @param <T>            the type of the exception
      * @return the current instance
      */
     public <T> TryCatcher when(Class<T> exceptionClass, CatchBlock catchBlock) {
@@ -105,10 +105,10 @@ public class TryCatcher {
      * Assign the specific catch block whenever one of these exceptions is caught
      *
      * @param exceptionClasses the exception classes
-     * @param catchBlock  the correspondent catch block
+     * @param catchBlock       the correspondent catch block
      * @return the current instance
      */
-    public   TryCatcher catchWhen(CatchBlock catchBlock, List<Class<?>> exceptionClasses) {
+    public TryCatcher catchWhen(CatchBlock catchBlock, List<Class<?>> exceptionClasses) {
         for (Class<?> exceptionClass : exceptionClasses) {
             catchBlockMap.put(exceptionClass, catchBlock);
         }
@@ -145,5 +145,13 @@ public class TryCatcher {
     public TryCatcher then(TryCatcher tryCatcher) {
         tryCatcher.execute();
         return tryCatcher;
+    }
+
+    public static TryCatcher of(TryBlock tryBlock, CatchBlock catchBlock) {
+        return new TryCatcher(tryBlock, catchBlock);
+    }
+
+    public static TryCatcher of(TryBlock tryBlock) {
+        return new TryCatcher(tryBlock);
     }
 }
