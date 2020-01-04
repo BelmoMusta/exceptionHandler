@@ -1,4 +1,7 @@
 # exceptionHandler
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/a110cd81af2f4990960799e4bb389958)](https://www.codacy.com/manual/BelmoMusta/exceptionHandler?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=BelmoMusta/exceptionHandler&amp;utm_campaign=Badge_Grade)
+
 A java 8 lambda based exception handler, it represents a convenient way to get rid of the legacy try-catch blocks in java, 
 by making use of the advantages provided by the functoinal behaviour in java 8 and above.
 
